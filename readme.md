@@ -1,6 +1,22 @@
 # FindBigSource
 
 
+## add in classpah
+```java
+buildscript {
+
+    repositories {
+        google()
+        jcenter()
+
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.0.0'
+        classpath 'com.seekting.gradle:big-source-finder:1.0.2'
+    }
+}
+
+```
 ## add plugin in build.grade
 ```gradle
 apply plugin: 'com.seekting.gradle.bigsourcefinder'
