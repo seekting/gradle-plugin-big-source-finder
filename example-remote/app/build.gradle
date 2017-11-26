@@ -23,7 +23,7 @@ dependencies {
     implementation 'com.android.support:appcompat-v7:26.1.0'
 }
 findbigsource {
-    maxSize = 2 * 1024
+    maxSize = 200 * 1024
     ifHasAboveMaxSizeCrash = true
     checkDuplicate = true
     ifHasDuplicateCrash = false

@@ -1,14 +1,20 @@
 apply plugin: 'groovy'
 apply plugin: 'maven'
+configurations {
+    provided
+    compile.extendsFrom provided
+}
 
 dependencies {
     compile gradleApi()
     compile localGroovy()
 //    compile 'org.codehaus.groovy:groovy-all:2.3.11'
+    provided 'com.android.tools.build:gradle:2.2.1'
     testCompile group: 'junit', name: 'junit', version: '4.12'
 }
 repositories {
     mavenCentral()
+    jcenter()
 }
 
 
@@ -28,4 +34,25 @@ uploadArchives {
             pom.groupId='com.seekting.gradle'
         }
     }
+}
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.novoda:bintray-release:0.3.4'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+apply plugin: 'com.novoda.bintray-release'
+publish{
+    userOrg = 'seekting'//bintray.com用户名
+    groupId = 'com.seekting.gradle'//jcenter上的路径
+    artifactId = 'big-source-finder'//项目名称
+    publishVersion = '1.0.2'//版本号
+    desc = 'gradle plugin for android,which can find big source such as big png in res\'s dir'//描述，不重要
+    website = 'https://github.com/seekting/gradle-plugin-big-source-finder.git'//网站，不重要；尽量模拟github上的地址，例如我这样的；当然你有地址最好了
 }
