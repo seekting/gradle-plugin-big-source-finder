@@ -65,7 +65,7 @@ publish {
     userOrg = 'seekting'//bintray.com用户名
     groupId = 'com.seekting.gradle'//jcenter上的路径
     artifactId = 'big-source-finder'//项目名称
-    publishVersion = '1.0.4'//版本号
+    publishVersion = '1.0.5'//版本号
     desc = 'gradle plugin for android,which can find big source such as big png in res\'s dir'
 //描述，不重要
     website = 'https://github.com/seekting/gradle-plugin-big-source-finder.git'

@@ -12,7 +12,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.seekting.gradle:big-source-finder:1.0.2'
+        classpath 'com.seekting.gradle:big-source-finder:1.0.5'
     }
 }
 
