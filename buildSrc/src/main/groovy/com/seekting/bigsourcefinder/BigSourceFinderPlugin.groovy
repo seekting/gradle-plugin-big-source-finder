@@ -66,7 +66,7 @@ class BigSourceFinderPlugin implements Plugin<Project> {
                         config = Config.defaultConfig()
                     }
                     task.mConfig = config
-                    FindLogger.error("findbigsource:${config}")
+                    FindLogger.info("findbigsource:${config}")
 
 //                    task.doFirst {
 //

@@ -33,7 +33,7 @@ class FindTask extends DefaultTask {
     def find() {
         buildGenerate = new BuildGenerate(output)
         md5Map.clear()
-        FindLogger.error("outputbuildGenerate:$output")
+        FindLogger.info("outputbuildGenerate:$output")
 
 
         def time = System.currentTimeMillis() + ""
