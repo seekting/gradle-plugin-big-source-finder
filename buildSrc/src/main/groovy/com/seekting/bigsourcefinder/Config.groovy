@@ -1,6 +1,6 @@
 package com.seekting.bigsourcefinder
-
-class Config {
+class Config implements java.io.Serializable{
+    private static final long serialVersionUID = -1L;
     int maxSize = 1 * 1024
     boolean ifHasAboveMaxSizeCrash = true
     boolean checkDuplicate = true
@@ -12,4 +12,13 @@ class Config {
     }
 
 
+    @Override
+    public String toString() {
+        return "Config{" +
+                "maxSize=" + maxSize +
+                ", ifHasAboveMaxSizeCrash=" + ifHasAboveMaxSizeCrash +
+                ", checkDuplicate=" + checkDuplicate +
+                ", ifHasDuplicateCrash=" + ifHasDuplicateCrash +
+                '}';
+    }
 }

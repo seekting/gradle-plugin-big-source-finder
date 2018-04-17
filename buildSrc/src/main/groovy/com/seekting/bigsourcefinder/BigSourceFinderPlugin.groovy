@@ -57,11 +57,16 @@ class BigSourceFinderPlugin implements Plugin<Project> {
                     task.group = "find-big-source"
                     task.description = "find ${variant.buildType.name} big source"
                     task.imgDirs = imgDirectories
+
+                    File f = variant.generateBuildConfig.getSourceOutputDir().getParentFile().getParentFile().getParentFile().getParentFile()
+
+                    String dir = "${f.absolutePath}${File.separator}finder${File.separator}${variant.name}"
+                    task.output = new File(dir, "${name}.txt")
                     if (config == null) {
                         config = Config.defaultConfig()
                     }
                     task.mConfig = config
-                    FindLogger.info("findbigsource:${config}")
+                    FindLogger.error("findbigsource:${config}")
 
 //                    task.doFirst {
 //

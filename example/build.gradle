@@ -11,7 +11,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.0'
-        classpath 'com.seekting.gradle:big-source-finder:1.0.1'
+        classpath 'com.seekting.gradle:big-source-finder:2.0.6'
     }
 }
 
@@ -23,7 +23,10 @@ allprojects {
             url uri('../repo')
         }
     }
-
+    configurations.all {
+        // check for updates every build
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
 }
 
 task clean(type: Delete) {

@@ -1,6 +1,9 @@
 package com.seekting.bigsourcefinder
 
 import org.gradle.api.DefaultTask
+import org.gradle.api.tasks.Input
+import org.gradle.api.tasks.InputFiles
+import org.gradle.api.tasks.OutputFile
 import org.gradle.api.tasks.TaskAction
 
 class FindTask extends DefaultTask {
@@ -8,12 +11,34 @@ class FindTask extends DefaultTask {
     public List<File> imgDirs
     public Map<String, File> md5Map = new HashMap()
     Config mConfig
+    public File output
+    BuildGenerate buildGenerate;
+
+    @Input
+    public String getConfigStr() {
+        return mConfig.toString();
+    }
+
+    @OutputFile
+    public File getTargetFile() {
+        return output
+    }
+
+    @InputFiles
+    public List<File> getImgDirs() {
+        return imgDirs
+    }
 
     @TaskAction
     def find() {
+        buildGenerate = new BuildGenerate(output)
         md5Map.clear()
+        FindLogger.error("outputbuildGenerate:$output")
 
-        System.out.println("find task begin!")
+
+        def time = System.currentTimeMillis() + ""
+        buildGenerate.info("time=$time")
+        System.out.println("find task begin!!!")
         int bigCount = 0
         int sameCount = 0
         imgDirs.forEach { dir ->
@@ -22,8 +47,10 @@ class FindTask extends DefaultTask {
                     if (mConfig.maxSize <= file.length()) {
                         if (mConfig.ifHasAboveMaxSizeCrash) {
                             FindLogger.error("${file.absolutePath} is too big")
+                            buildGenerate.error("${file.absolutePath} is too big")
                         } else {
                             FindLogger.warn("${file.absolutePath} is too big")
+                            buildGenerate.warn("${file.absolutePath} is too big")
                         }
                         bigCount++
                     }
@@ -36,8 +63,11 @@ class FindTask extends DefaultTask {
                             String to = "${theFile.getParentFile().name}${File.separator}${theFile.name}"
                             if (mConfig.ifHasDuplicateCrash) {
                                 FindLogger.error("find same file:[${from},${to}]")
+                                buildGenerate.error("find same file:[${from},${to}]")
+
                             } else {
                                 FindLogger.warn("find same file:[${from},${to}]")
+                                buildGenerate.warn("find same file:[${from},${to}]")
                             }
                             sameCount++
                         } else {
@@ -51,11 +81,16 @@ class FindTask extends DefaultTask {
         }
         System.out.println("find task end!")
         if (bigCount > 0 && mConfig.ifHasAboveMaxSizeCrash) {
+            buildGenerate.error("$bigCount source files is too big!")
+            buildGenerate.save()
             throw new IllegalArgumentException("$bigCount source files is too big!")
         }
         if (sameCount > 0 && mConfig.ifHasDuplicateCrash) {
+            buildGenerate.error("$sameCount source files duplicate!!")
+            buildGenerate.save()
             throw new IllegalArgumentException("$sameCount source files duplicate!!")
         }
+        buildGenerate.save()
         md5Map.clear()
     }
 }
